@@ -1,0 +1,168 @@
+#home .top {
+    height: 50vh;
+    min-height: 300px;
+}
+
+#home .top > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.main {
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    margin-top: 0px;
+    width: 100%;
+    padding: auto 20px !important;
+}
+.main .avatar {
+    border-radius: 1000px;
+    overflow: hidden;
+    height: 100px;
+    width: 100px;
+}
+
+
+/* cart */
+.cart h6 {
+    margin: 4px 0;
+    padding: 0;
+}
+.cart p {
+    margin: 4px 0;
+    padding: 0;
+}
+.cart input {
+    width: 50px;
+    padding: 0;
+    margin: 0 5px;
+}
+.delete-icon {
+    height: 15px;
+    object-fit: contain;
+}
+
+
+.proceed-card {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    right: 0;
+    margin-bottom: 10px;
+}
+
+
+.quantity button {
+    font-size: 8px;
+}
+
+
+
+/* checkout */
+
+.alert-head {
+    height: 50px;
+}
+
+.alert-head__left {
+    height: 40px;
+}
+
+.alert-head__left img {
+    height: 40px;
+    border-radius: 1000px;
+}
+.alert-head__right {
+    flex: 1;
+    text-align: right;
+}
+.alert-head__right a {
+    text-decoration: none;
+
+}
+
+.alert-body_head ul {
+    display: flex;
+    justify-content: space-evenly;
+    list-style: none;
+    padding-inline-start: 0;
+}
+.alert-body_head ul li {
+    font-weight: bold;
+    width: 100%;
+}
+.alert-body_head ul li:hover {
+    background-color: #f9f9f9;
+}
+
+.alert-body_head ul li.active {
+    background-color: #f9f9f9;
+}
+
+.alert-body_middle {
+    height: 60px;
+    padding: 0 20px;
+}
+
+.alert-body_middle .left {
+    height: 100%;
+    flex: 1;
+    animation: movevan 10s infinite;
+
+}
+
+.alert-body_middle .left img {
+    height: 100%;
+}
+.alert-body_middle .right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+.alert-body_middle .right div {
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+.alert-container hr {
+    border: 1px solid white;
+    margin: 0;
+    margin-top: 5px;
+}
+.alert-container {
+    display: none;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    max-width: 600px;
+    margin: 0 auto;
+    background: #b6b6b686;
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    height: 100%;
+}
+
+
+@keyframes movevan {
+    from {
+        padding-left: 0;
+    }
+    to {
+        padding-left: calc(100% - 100px);
+    }
+}
+@-moz-keyframes movevan {
+    from {
+        padding-left: 0;
+    }
+    to {
+        padding-left: 100%;
+    }
+}
