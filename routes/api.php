@@ -54,8 +54,6 @@ Route::post('/verified', [AccountController::class, 'verified']);
 // Plans
 Route::get('getplans/{currency}', [PlanController::class, 'getplans']);
 
-
-
 // Shops
 Route::get('fetchStore/{key}', [StoreController::class, 'fetchStore']);
 Route::get('fetchStore2/{api}/{key}', [StoreController::class, 'fetchStore2']);
@@ -74,6 +72,7 @@ Route::post('add-product/slideshow/', [ProductController::class, 'addProductSlid
 
 Route::get('fetchProduct/{key}/{product}', [ProductController::class, 'fetchProduct']);
 Route::post('updateDesc/{product}', [ProductController::class, 'updateDesc']);
+Route::post('updatePrice/{product}/{newprice}', [ProductController::class, 'updatePrice']);
 Route::post('updateImage/{product}', [ProductController::class, 'updateImage']);
 Route::post('deleteProduct/{product}', [ProductController::class, 'deleteProduct']);
 

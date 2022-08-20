@@ -8,12 +8,15 @@ use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 
+use function PHPUnit\Framework\isEmpty;
+
 class ProductController extends Controller
 {
-    public function fetchProducts($key){
+    public function fetchProducts($key)
+    {
         $user = User::where('api_token', $key)->first();
         // $user = User::where('api_token', "test")->first();
-        if(!$user){
+        if (!$user) {
             return response()->json("login", 200);
         }
         $store = $user->store;
@@ -26,7 +29,8 @@ class ProductController extends Controller
         return response()->json($data, 200);
     }
 
-    public function addProduct(Request $request){
+    public function addProduct(Request $request)
+    {
         $this->validate($request, [
             'market_id' => '',
             'Name' => ['required'],
@@ -50,31 +54,36 @@ class ProductController extends Controller
         return response()->json(true, 200);
     }
 
-    public function addProductSlideShow(Request $request){
+    public function addProductSlideShow(Request $request)
+    {
 
         $productid = substr(str_shuffle("1234567890ABCDEFGHIJKLMNPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"), 0, 20);
         $file = $request->file("upload");
         $path = $file->store("products", "public");
-        
+        $store = Market::where("id", $request->market_id)->first();
+
+        if ($store->WhatsappNo == " " || empty($store->WhatsappNo) || $store->Phone == "") {
+            return response()->json(false, 200);
+        }
         $product = Product::create([
             'market_id' => $request->market_id,
             'Image' => $path,
             'Product_id' => $productid,
         ]);
 
-        if($product){
+        if ($product) {
             return response()->json(true, 200);
-        }else{
+        } else {
             return response()->json(false, 200);
         }
-        
     }
 
-    public function fetchProduct($key, $product){
+    public function fetchProduct($key, $product)
+    {
 
         $user = User::where('api_token', $key)->first();
         // $user = User::where('api_token', "test")->first();
-        if(!$user){
+        if (!$user) {
             return response()->json("login", 200);
         }
 
@@ -84,11 +93,12 @@ class ProductController extends Controller
         ];
         return response()->json($data, 200);
     }
-    public function updatePrice($product, $newprice){
+    public function updatePrice($product, $newprice)
+    {
 
         $product = Product::where("Product_id", $product)->first();
-        if(!$product){
-        return response()->json(200);
+        if (!$product) {
+            return response()->json(200);
         }
         $product->Price = $newprice;
         $product->save();
@@ -96,23 +106,25 @@ class ProductController extends Controller
         return response()->json(200);
     }
 
-    public function updateDesc (Request $request, $product){
+    public function updateDesc(Request $request, $product)
+    {
         $product = Product::where("Product_id", $product)->first();
-        if(!$product){
-        return response()->json(200);
+        if (!$product) {
+            return response()->json(200);
         }
         $product->Description = $request->descr;
         $product->save();
         return response()->json(200);
     }
 
-    public function updateImage (Request $request, $product){
+    public function updateImage(Request $request, $product)
+    {
         $this->validate($request, [
             'logo' => ['required', 'file'],
         ]);
 
         $product = Product::where("Product_id", $product)->first();
-        if(!$product){
+        if (!$product) {
             return response()->json(200);
         }
         $path = $request->file('logo')->store('products', 'public');;
@@ -121,9 +133,10 @@ class ProductController extends Controller
         return response()->json(200);
     }
 
-    public function deleteProduct ($product){
+    public function deleteProduct($product)
+    {
         $product = Product::where("Product_id", $product)->first();
-        if(!$product){
+        if (!$product) {
             return response()->json(200);
         }
 
@@ -133,15 +146,18 @@ class ProductController extends Controller
 
 
 
+
+
     // nearme 
-    public function getProducts($country){
+    public function getProducts($country)
+    {
         $products = Product::with("PStore")->get();
 
         $theProducts = [];
 
         foreach ($products as $product) {
-            if ($product->Pstore != null){
-                if($product->PStore->country != null && $product->PStore->country == $country){
+            if ($product->Pstore != null) {
+                if ($product->PStore->country != null && $product->PStore->country == $country) {
                     array_push($theProducts, $product);
                     array_push($theProducts, $product);
                 }
@@ -151,10 +167,11 @@ class ProductController extends Controller
         return response()->json(["products" => $theProducts], 200);
     }
 
-    public function getProduct($product){
+    public function getProduct($product)
+    {
         $product = Product::with("PStore")->where("Product_id", $product)->first();
         $store = $product->market_id;
-        
+
         $related = Product::with("PStore")->where("market_id", $store)->get();
         $relatedProducts = [];
         foreach ($related as $rProduct) {
@@ -166,8 +183,7 @@ class ProductController extends Controller
             "product" => $product,
             "related" => $relatedProducts
         ];
-        
+
         return response()->json($data, 200);
     }
-
 }
